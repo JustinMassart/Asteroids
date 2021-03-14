@@ -1,0 +1,31 @@
+{
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "laravel-mix": "^6.0.13"
+  },
+  "name": "asteroids",
+  "description": "An incomplete implementation of the classic Asteroids game based on https://www.echalk.co.uk/amusements/Games/asteroidsClassic/ateroids.html",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "cross-spawn": "^7.0.3",
+    "isexe": "^2.0.0",
+    "path-key": "^3.1.1",
+    "shebang-command": "^2.0.0",
+    "shebang-regex": "^3.0.0",
+    "which": "^2.0.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://JustinMassart@github.com/JustinMassart/Asteroids.git"
+  },
+  "author": "Justin Massart",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JustinMassart/Asteroids/issues"
+  },
+  "homepage": "https://github.com/JustinMassart/Asteroids#readme"
+}
