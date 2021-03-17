@@ -1,25 +1,50 @@
-const main = document.getElementById('asteroids')
-document.body.removeChild(main)
+import ship from './ship'
 
-const canvas = document.createElement('canvas')
-document.body.insertAdjacentElement('afterbegin', canvas)
-canvas.width = 640
-canvas.height = 480
+const main = {
+  mainElt: null,
+  canvasElt: null,
+  canvasEltDimensions: {
+    width: 640,
+    height: 480,
+  },
+  ctx: null,
 
-const ctx = canvas.getContext('2d')
-ctx.strokeStyle = '#fff'
+  init() {
+    this.mainElt = document.getElementById('asteroids')
+    document.body.removeChild(this.mainElt)
 
-const shipSize = 20
+    this.canvasElt = document.createElement('canvas')
+    document.body.insertAdjacentElement('afterbegin', this.canvasElt)
+    this.canvasElt.width = this.canvasEltDimensions.width
+    this.canvasElt.height = this.canvasEltDimensions.height
 
-ctx.rotate(0)
-ctx.translate(canvas.width / 2, canvas.height / 2)
+    this.ctx = this.canvasElt.getContext('2d')
+    this.ctx.strokeStyle = '#fff'
 
-ctx.beginPath()
-ctx.moveTo(0, -1.5 * shipSize / 2)
-ctx.lineTo(shipSize / 2,
-  0.5 + (shipSize * 1.5 / 2))
-ctx.lineTo(-shipSize / 2,
-  0.5 + (shipSize * 1.5 / 2))
-ctx.closePath()
-ctx.stroke()
+    ship.init(this.canvasElt, this.ctx)
 
+    this.animate()
+  },
+  animate() {
+    window.requestAnimationFrame(() => {
+      this.animate()
+    })
+    this.ctx.clearRect(0, 0, this.canvasElt.width, this.canvasElt.height)
+    ship.update()
+  },
+}
+
+const asteroidSize = 20
+
+function asteroidDraw() {
+  ctx.save()
+
+  ctx.rotate(0.1)
+  ctx.translate(50, 50)
+  ctx.strokeRect(-asteroidSize / 2, -asteroidSize / 2, asteroidSize,
+      asteroidSize)
+
+  ctx.restore()
+}
+
+main.init()
