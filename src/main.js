@@ -20,6 +20,7 @@ const main = {
 
     this.ctx = this.canvasElt.getContext('2d')
     this.ctx.strokeStyle = '#fff'
+    this.ctx.fillStyle = '#fff'
 
     ship.init(this.canvasElt, this.ctx)
 
@@ -31,20 +32,22 @@ const main = {
     })
     this.ctx.clearRect(0, 0, this.canvasElt.width, this.canvasElt.height)
     ship.update()
+    ship.bullets.forEach((bullet) => {
+      bullet.update()
+    })
   },
 }
 
 const asteroidSize = 20
 
 function asteroidDraw() {
-  ctx.save()
+  this.ctx.save()
 
-  ctx.rotate(0.1)
-  ctx.translate(50, 50)
-  ctx.strokeRect(-asteroidSize / 2, -asteroidSize / 2, asteroidSize,
+  this.ctx.rotate(0.1)
+  this.ctx.translate(50, 50)
+  this.ctx.strokeRect(-asteroidSize / 2, -asteroidSize / 2, asteroidSize,
       asteroidSize)
-
-  ctx.restore()
+  this.ctx.restore()
 }
 
 main.init()
