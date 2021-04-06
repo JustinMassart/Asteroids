@@ -21,16 +21,21 @@ const ship = {
     this.ctx = ctx
     this.location = new Vector(this.canvas.width / 2, this.canvas.height / 2)
     this.speed = new Vector(0, 0)
+    this.shape = [
+      0,
+      -1.5 * this.size / 2,
+      this.size / 2,
+      0.5 + (this.size * 1.5 / 2),
+      -this.size / 2,
+      0.5 + (this.size * 1.5 / 2)]
     this.path = new Path2D()
     this.createPath()
   },
 
-  createPath(){
-    this.path.moveTo(0, -1.5 * this.size / 2)
-    this.path.lineTo(this.size / 2,
-        0.5 + (this.size * 1.5 / 2))
-    this.path.lineTo(-this.size / 2,
-        0.5 + (this.size * 1.5 / 2))
+  createPath() {
+    this.path.moveTo(this.shape[0], this.shape[1])
+    this.path.lineTo(this.shape[2], this.shape[3])
+    this.path.lineTo(this.shape[4], this.shape[5])
     this.path.closePath()
   },
 
