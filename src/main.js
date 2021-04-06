@@ -1,4 +1,7 @@
 import ship from './ship'
+import Asteroid from './Asteroid'
+import collisionDetector from './collisionDetector'
+import garbageManager from './garbageManager'
 
 const main = {
   mainElt: null,
@@ -8,6 +11,8 @@ const main = {
     height: 480,
   },
   ctx: null,
+  asteroids: [],
+  asteroidsCount: 4,
 
   init() {
     this.mainElt = document.getElementById('asteroids')
@@ -22,6 +27,10 @@ const main = {
     this.ctx.strokeStyle = '#fff'
     this.ctx.fillStyle = '#fff'
 
+    for (let i = 0; i < this.asteroidsCount; i++) {
+      this.asteroids.push(new Asteroid(this.canvasElt, this.ctx))
+    }
+
     ship.init(this.canvasElt, this.ctx)
 
     this.animate()
@@ -35,19 +44,29 @@ const main = {
     ship.bullets.forEach((bullet) => {
       bullet.update()
     })
+    this.asteroids.forEach((asteroid) => {
+      asteroid.update()
+    })
+    if (ship.bullets.length && this.asteroids.length) {
+      const collindingPair = collisionDetector.detect(this.ctx, ship,
+          this.asteroids)
+      if (collindingPair) {
+        garbageManager.remove(collindingPair.bullet, ship.bullets)
+        if (collindingPair.asteroid.size > 4) {
+          this.generateSmallAsteroids(collindingPair.asteroid)
+
+        }
+        garbageManager.remove(collindingPair.asteroid, this.asteroids)
+      }
+    }
   },
-}
 
-const asteroidSize = 20
-
-function asteroidDraw() {
-  this.ctx.save()
-
-  this.ctx.rotate(0.1)
-  this.ctx.translate(50, 50)
-  this.ctx.strokeRect(-asteroidSize / 2, -asteroidSize / 2, asteroidSize,
-      asteroidSize)
-  this.ctx.restore()
+  generateSmallAsteroids(parentAsteroid) {
+    const childrenCount = Math.floor(2 + Math.random() * 3)
+    for (let i = 0; i < childrenCount; i++) {
+      this.asteroids.push(new Asteroid(this.canvasElt, this.ctx, parentAsteroid))
+    }
+  },
 }
 
 main.init()
